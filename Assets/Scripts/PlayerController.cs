@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     Transform t;
 
 	//OTHER REFERENCES
+	[SerializeField]
+	Transform cameraFollow;
     [SerializeField]
     Inputs inputs;
 
@@ -60,6 +62,22 @@ public class PlayerController : MonoBehaviour
 			{
 				currentSpeed = walkSpeed; 
 			}
+		}
+		if (inputs.camera != Vector2.zero)
+		{
+			Vector3 camRotation = cameraFollow.rotation.eulerAngles;
+			Vector3 newCamRotation = new Vector3(Mathf.Clamp(camRotation.x + inputs.camera.y, -60f, 60f), camRotation.y + inputs.camera.x, 0f);
+			cameraFollow.rotation = Quaternion.Euler(newCamRotation);
+			//cameraFollow.rotation *= Quaternion.Euler((Vector3)inputs.camera);
+			//cameraFollow.rotation *= Quaternion.AngleAxis(inputs.camera.x, t.up);
+			//cameraFollow.rotation *= Quaternion.AngleAxis(inputs.camera.x, Vector3.up);
+			//cameraFollow.rotation *= Quaternion.AngleAxis(inputs.camera.y, Vector3.right);
+			//cameraFollow.rotation *= Quaternion.Euler((Vector3)inputs.camera);
+			//cameraFollow.rotation *= Quaternion.Euler(inputs.camera.x, inputs.camera.y, 0f);
+			//cameraFollow.Rotate(cameraFollow.up, inputs.camera.x);
+			//cameraFollow.Rotate(cameraFollow.right, inputs.camera.y);
+			//cameraFollow.Rotate(new Vector3(inputs.camera.y, inputs.camera.x, 0f));
+			//cameraFollow.Rotate(new Vector3(inputs.camera.y, inputs.camera.x, 0f));
 		}
 		Debug.DrawRay(t.position, Vector3.down * rayLength, Color.red);
 	}
