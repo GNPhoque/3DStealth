@@ -117,13 +117,16 @@ public class PlayerAirStateMachine : MonoBehaviour
 	#region OnStateUpdate
 	private void OnUpdateGround()
 	{
-		if (player.velocity.y < fallDetectionVelocity)
+		if (!player.isGrounded)
 		{
-			TransitionToState(AirState.FALL);
-		}
-		else if (inputs.jump)
-		{
-			TransitionToState(AirState.JUMP);
+			if (player.velocity.y < fallDetectionVelocity)
+			{
+				TransitionToState(AirState.FALL);
+			}
+			else if (inputs.jump)
+			{
+				TransitionToState(AirState.JUMP);
+			} 
 		}
 	}
 
